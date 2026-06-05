@@ -2,9 +2,28 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Victory Velocity — Be the answer, everywhere they ask",
+  title: "Victory Velocity | Be the answer, everywhere they ask.",
   description:
-    "We get brands cited in AI answers and running on ChatGPT Ads. Generative Engine Optimization, ChatGPT Ads setup, and weekly AI visibility tracking.",
+    "Victory Velocity helps brands get cited in AI answers and running on ChatGPT Ads. We handle Generative Engine Optimization, ChatGPT Ads setup, and weekly AI visibility tracking.",
+  metadataBase: new URL("https://www.victoryvelocity.ca"),
+  openGraph: {
+    title: "Victory Velocity | Be the answer, everywhere they ask.",
+    description:
+      "Victory Velocity helps brands get cited in AI answers and running on ChatGPT Ads.",
+    url: "https://www.victoryvelocity.ca",
+    siteName: "Victory Velocity",
+    locale: "en_CA",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Victory Velocity | Be the answer, everywhere they ask.",
+    description:
+      "Victory Velocity helps brands get cited in AI answers and running on ChatGPT Ads.",
+  },
+  alternates: {
+    canonical: "https://www.victoryvelocity.ca",
+  },
 };
 
 const schema = {
