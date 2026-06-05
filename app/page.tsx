@@ -1,282 +1,312 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { useState, useEffect } from "react";
+import React from "react";
+import { GEOVisual, AdsManagerVisual, WeeklyReportVisual } from "@/components/ServiceVisuals";
 
-const DISPLAY = {
-  fontFamily: "var(--font-cormorant), Georgia, 'Times New Roman', serif",
-};
-
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const heroItem = {
-  hidden: { opacity: 0, y: 36 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.9, ease: EASE },
-  },
-};
-
-const services = [
-  {
-    title: "ChatGPT Ads Setup",
-    body: "We configure and launch your business on ChatGPT's native advertising platform. From account setup to creative strategy, we handle everything — so you capture the fastest-growing search audience on the internet.",
-  },
-  {
-    title: "Geo-Targeted Campaigns",
-    body: "Precision campaigns that reach the right people in the right places. Whether you're targeting a single neighborhood or a national market, we engineer campaigns that convert location intent into paying customers.",
-  },
-];
+const ENGINES = ["ChatGPT", "Claude", "Perplexity", "Gemini", "Copilot", "Grok", "Meta AI", "DeepSeek"];
+const SEQ = [...ENGINES, ...ENGINES];
+const HOT_A = 2; // Perplexity is highlighted in top strip
 
 export default function Home() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", url: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+
+  useEffect(() => {
+    // nav scroll + hide on scroll down
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setNavScrolled(y > 40);
+      setNavHidden(y > 80 && y > lastY);
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // scroll reveal
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    );
+    document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.name || !form.email || !form.url) return;
+    if (!/.+@.+\..+/.test(form.email)) return;
     setStatus("sending");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: `Website: ${form.url}\n\n${form.message || "(no message)"}`,
+        }),
       });
-      if (res.ok) {
-        setStatus("sent");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("idle");
-      }
+      if (res.ok) setStatus("sent");
+      else setStatus("idle");
     } catch {
       setStatus("idle");
     }
   };
 
   return (
-    <main>
+    <>
+      {/* ── NAV ── */}
+      <nav className={`nav${navScrolled ? " scrolled" : ""}${navHidden ? " hide" : ""}`} id="nav">
+        <div className="mark">Victory&nbsp;Velocity</div>
+        <div className="links">
+          <a href="#services">Services</a>
+          <a href="#process">Approach</a>
+        </div>
+        <a href="#contact" className="cta">Work With Us</a>
+      </nav>
+
       {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col justify-center bg-black overflow-hidden">
-        <div className="hero-gradient" />
-        <div className="grain-overlay" />
-
-        <div className="relative z-10 max-w-[1400px] mx-auto w-full px-8 lg:px-20 py-32">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.13 } },
-            }}
-          >
-<motion.h1
-              variants={heroItem}
-              className="text-white leading-[0.88] mb-10 select-none"
-              style={{
-                ...DISPLAY,
-                fontSize: "clamp(5rem, 13.5vw, 15rem)",
-                fontWeight: 300,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Victory
-              <br />
-              Velocity
-            </motion.h1>
-
-            <motion.p
-              variants={heroItem}
-              className="text-white/70 leading-relaxed max-w-[420px]"
-              style={{ ...DISPLAY, fontStyle: "italic", fontWeight: 300, fontSize: "clamp(1.1rem, 1.6vw, 1.4rem)" }}
-            >
-              We set up ChatGPT ads for your business.
-              <br />
-              We also do geo-targeted campaigns.
-            </motion.p>
-
-            <motion.div variants={heroItem} className="mt-14">
-              <a href="#contact">
-                <Button
-                  className="rounded-none border border-white/25 bg-transparent text-white
-                             hover:bg-white hover:text-black hover:border-white
-                             text-[11px] tracking-[0.28em] uppercase px-9 py-5 h-auto
-                             transition-all duration-300"
-                >
-                  Work with us
-                </Button>
-              </a>
-            </motion.div>
-          </motion.div>
+      <header className="hero">
+        <div className="wrap">
+          <h1>Be the answer,<br /><span className="it">everywhere</span> they ask.</h1>
+          <p className="hero-sub">We get brands cited in AI answers — and running on ChatGPT Ads.</p>
         </div>
 
+        <div className="marquee-band" aria-hidden="true">
+          <div className="marquee">
+            <div className="track">
+              {SEQ.map((e, i) => (
+                <span key={i} className={`eng${i % ENGINES.length === HOT_A ? " hot" : ""}`}>
+                  {e}<span className="star">✦</span>
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="marquee">
+            <div className="track rev">
+              {SEQ.map((e, i) => (
+                <span key={i} className="eng">
+                  {e}<span className="star">✦</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="wrap">
+          <div className="hero-foot">
+            <a href="#contact" className="cta solid">Work With Us <span className="arr">→</span></a>
+          </div>
+        </div>
+      </header>
+
+      {/* ── SHIFT ── */}
+      <section className="shift sec-pad">
+        <div className="wrap">
+          <p className="big rv d1">
+            Your customers stopped searching.<br />
+            <span className="dim">They started </span>
+            <span className="it swipe">asking</span>
+            <span className="dim">.</span>
+          </p>
+          <p className="body rv d2">
+            When someone asks ChatGPT, Perplexity, or Google&apos;s AI for the best option,
+            they get one answer — not ten blue links. If the model doesn&apos;t name you,
+            you&apos;re not in the conversation. We make sure your brand is the one it reaches for.
+          </p>
+        </div>
       </section>
 
-      {/* ── SERVICES ── */}
-      <section className="bg-white py-28 lg:py-40">
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-20">
-<div className="grid md:grid-cols-2 gap-[1px] bg-black/10">
-            {services.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.8,
-                  delay: i * 0.14,
-                  ease: EASE,
-                }}
-                className="group"
-              >
-                <Card className="border-0 rounded-none shadow-none bg-white group-hover:bg-black transition-colors duration-500 h-full py-0 gap-0">
-                  <CardContent className="p-12 lg:p-16 flex flex-col gap-7 h-full">
-                    <h3
-                      className="text-black group-hover:text-white leading-[0.9] tracking-tight transition-colors duration-500"
-                      style={{
-                        ...DISPLAY,
-                        fontSize: "clamp(2.25rem, 3.5vw, 3.75rem)",
-                        fontWeight: 300,
-                      }}
-                    >
-                      {s.title}
-                    </h3>
-                    <p className="text-black/55 group-hover:text-white/55 leading-relaxed flex-1 transition-colors duration-500"
-                      style={{ ...DISPLAY, fontWeight: 300, fontSize: "clamp(1.05rem, 1.4vw, 1.25rem)" }}>
-                      {s.body}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+      {/* ── WAYS ── */}
+      <section className="ways sec-pad" id="services">
+        <div className="wrap">
+          <div className="head">
+            <h2 className="rv">
+              <span className="lead-in">What we do for you —</span>
+              Three ways to win the<br /><span className="it">generative</span> front door.
+            </h2>
+          </div>
+
+          <div className="way-list">
+
+            {/* 01 · GEO */}
+            <div className="way">
+              <div className="way-copy rv">
+                <div className="way-no">01 — Generative Engine Optimization</div>
+                <h3>Get cited in <span className="it">AI answers</span>.</h3>
+                <p>
+                  We build the technical foundation and content architecture that makes AI
+                  engines reach for your brand when customers ask relevant questions.
+                  Schema markup, topic clusters, AI visibility tracking.
+                </p>
+              </div>
+              <div className="way-vis rv d1">
+                <GEOVisual />
+              </div>
+            </div>
+
+            {/* 02 · ChatGPT Ads */}
+            <div className="way">
+              <div className="way-copy rv">
+                <div className="way-no">02 — ChatGPT Ads</div>
+                <h3>Reach customers<br />before they <span className="it">decide</span>.</h3>
+                <p>
+                  We set up and manage campaigns on OpenAI&apos;s native ad platform.
+                  Conversation-context targeting reaches users mid-thought, before a shortlist
+                  forms, inside the fastest-growing discovery channel on the internet.
+                </p>
+              </div>
+              <div className="way-vis rv d1">
+                <AdsManagerVisual />
+              </div>
+            </div>
+
+            {/* 03 · Weekly Tracking */}
+            <div className="way">
+              <div className="way-copy rv">
+                <div className="way-no">03 — Weekly Tracking</div>
+                <h3>Know exactly<br />where you <span className="it">stand</span>.</h3>
+                <p>
+                  We run prompt checks across ChatGPT, Perplexity, and Google AI Overviews
+                  every week and report on where your brand appears, what context it appears
+                  in, and what&apos;s moved.
+                </p>
+              </div>
+              <div className="way-vis rv d1">
+                <WeeklyReportVisual />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESS ── */}
+      <section className="process sec-pad" id="process">
+        <div className="wrap">
+          <h2
+            className="rv d1"
+            style={{
+              fontFamily: "var(--serif)", fontWeight: 400,
+              fontSize: "clamp(34px,4.4vw,58px)", lineHeight: 1.02,
+              letterSpacing: "-0.02em", margin: "0 0 64px", maxWidth: "640px",
+            }}
+          >
+            <span className="lead-in">How we&apos;ll work together —</span>
+            A clear path from <span style={{ fontStyle: "italic" }}>invisible</span> to inevitable.
+          </h2>
+          <div className="steps">
+            <div className="step rv">
+              <div className="sn">01</div>
+              <div><h4>Map the <span className="it">prompts</span></h4></div>
+              <p>We find the real questions your buyers ask AI — and benchmark exactly where you stand against the brands getting named today.</p>
+            </div>
+            <div className="step rv">
+              <div className="sn">02</div>
+              <div><h4>Build the <span className="it">signals</span></h4></div>
+              <p>Content, structure, and authority signals tuned to how generative engines decide who to cite — published where models look.</p>
+            </div>
+            <div className="step rv">
+              <div className="sn">03</div>
+              <div><h4>Run the <span className="it">ads</span></h4></div>
+              <p>Paid placement inside conversational search, so you capture intent the instant a buyer asks — not pages later.</p>
+            </div>
+            <div className="step rv">
+              <div className="sn">04</div>
+              <div><h4>Report &amp; <span className="it">iterate</span></h4></div>
+              <p>Weekly visibility checks across every engine, with a clear read on what changed and the next move to make.</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="bg-black py-28 lg:py-40">
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-20">
-          <div className="max-w-2xl">
-<motion.h2
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                duration: 0.9,
-                delay: 0.1,
-                ease: EASE,
-              }}
-              className="text-white leading-[0.9] mb-16"
-              style={{
-                ...DISPLAY,
-                fontSize: "clamp(4rem, 7vw, 8.5rem)",
-                fontWeight: 300,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Work with us.
-            </motion.h2>
+      <section className="close" id="contact">
+        <div className="wrap">
+          <h2 className="rv">Win the <span className="it">answer</span>.</h2>
+          <p className="sub rv d1">
+            Tell us about your brand. We&apos;ll show you where you stand in AI today — and how fast we can change it.
+          </p>
 
-            <motion.form
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              onSubmit={handleSubmit}
-              className="space-y-10"
-            >
-              <div className="grid sm:grid-cols-2 gap-10">
-                <div className="space-y-3">
-                  <Label className="text-[10px] tracking-[0.3em] uppercase text-white/55 font-normal">
-                    Name
-                  </Label>
-                  <Input
-                    value={form.name}
-                    onChange={(e) =>
-                      setForm((p) => ({ ...p, name: e.target.value }))
-                    }
-                    required
-                    placeholder="Your name"
-                    className="border-0 border-b border-white/20 rounded-none bg-transparent
-                               text-white placeholder:text-white/40 px-0 h-12 shadow-none
-                               focus-visible:ring-0 focus-visible:ring-offset-0
-                               focus-visible:border-white/60 transition-colors duration-200"
-                    style={{ ...DISPLAY, fontWeight: 300, fontSize: "1.1rem" }}
+          <form className="cform rv d2" onSubmit={handleSubmit} noValidate>
+            {status !== "sent" ? (
+              <>
+                <div className="grid2">
+                  <div className="cf">
+                    <label htmlFor="cf-name">Name</label>
+                    <input
+                      id="cf-name" name="name" type="text" placeholder="Jane Mercer" required
+                      value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+                    />
+                  </div>
+                  <div className="cf">
+                    <label htmlFor="cf-email">Work email</label>
+                    <input
+                      id="cf-email" name="email" type="email" placeholder="jane@brand.com" required
+                      value={form.email} onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                    />
+                  </div>
+                </div>
+                <div className="cf">
+                  <label htmlFor="cf-url">Brand website</label>
+                  <input
+                    id="cf-url" name="url" type="text" placeholder="brand.com" required
+                    value={form.url} onChange={(e) => setForm((p) => ({ ...p, url: e.target.value }))}
                   />
                 </div>
-                <div className="space-y-3">
-                  <Label className="text-[10px] tracking-[0.3em] uppercase text-white/55 font-normal">
-                    Email
-                  </Label>
-                  <Input
-                    type="email"
-                    value={form.email}
-                    onChange={(e) =>
-                      setForm((p) => ({ ...p, email: e.target.value }))
-                    }
-                    required
-                    placeholder="your@email.com"
-                    className="border-0 border-b border-white/20 rounded-none bg-transparent
-                               text-white placeholder:text-white/40 px-0 h-12 shadow-none
-                               focus-visible:ring-0 focus-visible:ring-offset-0
-                               focus-visible:border-white/60 transition-colors duration-200"
-                    style={{ ...DISPLAY, fontWeight: 300, fontSize: "1.1rem" }}
+                <div className="cf">
+                  <label htmlFor="cf-msg">What can we help with?</label>
+                  <textarea
+                    id="cf-msg" name="message" rows={3}
+                    placeholder="Tell us a bit about your brand and what you&apos;re looking for."
+                    value={form.message} onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
                   />
                 </div>
+                <div className="submit-row">
+                  <button type="submit" className="cta solid" disabled={status === "sending"}>
+                    {status === "sending" ? "Sending…" : <>Request your AI visibility audit <span className="arr">→</span></>}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="cform-thanks">
+                <p className="tk">Request received.</p>
+                <p>
+                  We&apos;re already pulling your brand&apos;s current standing across the major engines.
+                  Expect a note from us within one business day.
+                </p>
               </div>
-
-              <div className="space-y-3">
-                <Label className="text-[10px] tracking-[0.3em] uppercase text-white/55 font-normal">
-                  Message
-                </Label>
-                <Textarea
-                  value={form.message}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, message: e.target.value }))
-                  }
-                  required
-                  rows={4}
-                  placeholder="Tell us about your business and goals."
-                  className="border-0 border-b border-white/20 rounded-none bg-transparent
-                             text-white placeholder:text-white/40 px-0 shadow-none min-h-[5rem]
-                             focus-visible:ring-0 focus-visible:ring-offset-0
-                             focus-visible:border-white/60 resize-none transition-colors duration-200"
-                  style={{ ...DISPLAY, fontWeight: 300, fontSize: "1.1rem" }}
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={status !== "idle"}
-                className="rounded-none border border-white/25 bg-transparent text-white
-                           hover:bg-white hover:text-black hover:border-white
-                           text-[11px] tracking-[0.28em] uppercase px-9 py-5 h-auto
-                           transition-all duration-300 disabled:opacity-40"
-                style={{ ...DISPLAY, fontWeight: 400, fontSize: "0.85rem" }}
-              >
-                {status === "idle"
-                  ? "Send Message"
-                  : status === "sending"
-                  ? "Sending…"
-                  : "Message Sent"}
-              </Button>
-            </motion.form>
-          </div>
+            )}
+          </form>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-black border-t border-white/10 py-8 px-8 lg:px-20">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          <span className="text-[10px] tracking-[0.28em] uppercase text-white/45" style={{ ...DISPLAY, fontWeight: 400 }}>
-            Victory Velocity
-          </span>
-          <span className="text-[10px] text-white/35" style={{ ...DISPLAY, fontWeight: 400 }}>© 2026</span>
+      <footer>
+        <div className="wrap">
+          <div className="foot-row">
+            <div className="mark">Victory&nbsp;Velocity</div>
+            <div style={{ textAlign: "right" }}>
+              <p style={{ color: "var(--faint)", fontStyle: "italic", margin: "0 0 8px", lineHeight: 1.5, fontFamily: "var(--serif)", fontSize: "15px" }}>
+                AI visibility &amp; advertising for brands that intend to be cited.
+              </p>
+              <span style={{ fontFamily: "var(--sans)", fontSize: "12px", letterSpacing: "0.04em", color: "var(--faint)" }}>© 2026 Victory Velocity</span>
+            </div>
+          </div>
         </div>
       </footer>
-    </main>
+    </>
   );
 }

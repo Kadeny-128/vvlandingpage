@@ -1,33 +1,24 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "600"],
-  variable: "--font-cormorant",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 
 export const metadata: Metadata = {
-  title: "Victory Velocity — ChatGPT Ads Agency",
+  title: "Victory Velocity — Be the answer, everywhere they ask",
   description:
-    "We set up ChatGPT ads for your business. We also do geo-targeted campaigns.",
+    "We get brands cited in AI answers and running on ChatGPT Ads. Generative Engine Optimization, ChatGPT Ads setup, and weekly AI visibility tracking.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn(cormorant.variable, inter.variable)}>
-      <body className={cn("antialiased", inter.className)}>{children}</body>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
