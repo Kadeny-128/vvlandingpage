@@ -179,9 +179,9 @@ export default function Home() {
                 <div className="way-no">03 — Weekly Tracking</div>
                 <h3>Know exactly<br />where you <span className="it">stand</span>.</h3>
                 <p>
-                  We run prompt checks across ChatGPT, Perplexity, and Google AI Overviews
-                  every week and report on where your brand appears, what context it appears
-                  in, and what&apos;s moved.
+                  We run prompt checks across ChatGPT, Perplexity, Google AI Overviews,
+                  and every major generative engine every week — reporting on where your brand
+                  appears, what context it appears in, and what&apos;s moved.
                 </p>
               </div>
               <div className="way-vis rv d1">
