@@ -260,7 +260,7 @@ function AdsManagerInner({ onDone }: { onDone: () => void }) {
             <div style={{ marginBottom: "9px" }}>
               <p style={labelStyle}>Objective</p>
               <div style={fieldStyle}><span>Clicks</span><span style={{ color: "#bbb", fontSize: "8px" }}>▾</span></div>
-              <p style={{ ...SANS, fontSize: "8px", color: "#aaa", marginTop: "2px" }}>Choose the metric you'd like to focus on</p>
+              <p style={{ ...SANS, fontSize: "8px", color: "#aaa", marginTop: "2px" }}>Choose the metric you&apos;d like to focus on</p>
             </div>
             <div style={{ marginBottom: "9px" }}>
               <p style={labelStyle}>Locations for this campaign</p>
