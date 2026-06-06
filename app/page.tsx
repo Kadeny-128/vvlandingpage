@@ -232,6 +232,49 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <section className="faq sec-pad">
+        <div className="wrap">
+          <h2 className="faq-heading rv">FAQ</h2>
+          <div className="faq-list">
+            {[
+              {
+                q: "What is generative engine optimization?",
+                a: "When someone asks ChatGPT or Perplexity a question, the engine builds one answer from a set of sources. Your brand is either in that answer or it isn't. GEO is the work of making sure your brand is the one it reaches for.",
+              },
+              {
+                q: "How does ChatGPT Ads targeting work?",
+                a: "ChatGPT ads don't use keywords. Advertisers describe the types of conversations they want their ad to appear in, and OpenAI matches them to users mid-conversation in real time. The ad appears beneath ChatGPT's organic answer and never influences what it says.",
+              },
+              {
+                q: "What AI engines do you optimize for?",
+                a: "ChatGPT, Perplexity, Claude, Gemini, Copilot, Grok, Meta AI, and DeepSeek.",
+              },
+              {
+                q: "How does Victory Velocity help your brand?",
+                a: "We build the technical foundation and content that gets your brand cited in AI answers, and we run ChatGPT ad campaigns that reach customers before a decision is made. The two compound on each other.",
+              },
+              {
+                q: "How fast should you expect to see results?",
+                a: "AI visibility takes longer to move than traditional SEO. Results are measured in weeks because AI engines update their retrieval indexes on their own schedules. We track progress so you always know what's changed.",
+              },
+              {
+                q: "How do you get started?",
+                a: "Book a free intro call. No commitment, no pitch. We learn about your brand, tell you where you stand in AI today, and figure out together whether we're the right fit.",
+              },
+            ].map(({ q, a }, i) => (
+              <details key={i} className="faq-item rv">
+                <summary>
+                  <span className="faq-q">{q}</span>
+                  <span className="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <p className="faq-body">{a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CONTACT ── */}
       <section className="close" id="contact">
         <div className="wrap">
