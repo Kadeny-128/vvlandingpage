@@ -30,6 +30,11 @@ const schema = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "name": "Victory Velocity",
+      "url": "https://www.victoryvelocity.ca",
+    },
+    {
       "@type": "Organization",
       "@id": "https://www.victoryvelocity.ca/#organization",
       "name": "Victory Velocity",
