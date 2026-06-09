@@ -73,6 +73,7 @@ export default function Home() {
         <div className="links">
           <a href="#services">Services</a>
           <a href="#process">Approach</a>
+          <a href="/blog">Blog</a>
         </div>
         <a href="#contact" className="cta">Work With Us</a>
       </nav>
