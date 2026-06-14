@@ -1,0 +1,35 @@
+# Victory Velocity
+
+> Victory Velocity is a Canadian AI visibility and advertising agency that helps brands get cited in AI-generated answers and run campaigns on AI-native ad platforms. We specialize in Generative Engine Optimization (GEO), ChatGPT Ads management, and weekly AI citation tracking across every major generative engine.
+
+Victory Velocity works with brands that want to be present when customers ask AI for recommendations. As search behavior shifts from keyword queries to conversational AI prompts, we build the technical foundation, content architecture, and ad presence that makes brands the answer AI reaches for.
+
+## Services
+
+- [Generative Engine Optimization (GEO)](https://www.victoryvelocity.ca/#services): We build the schema markup, topic clusters, and content architecture that earns AI citations across ChatGPT, Perplexity, Claude, Gemini, Copilot, Grok, Meta AI, and DeepSeek.
+- [ChatGPT Ads Management](https://www.victoryvelocity.ca/#services): We set up and manage campaigns on OpenAI's native ad platform, targeting customers mid-conversation by conversation type rather than keywords.
+- [Weekly AI Visibility Tracking](https://www.victoryvelocity.ca/#services): We run systematic prompt checks across major generative engines every week and deliver reports showing where your brand appears, in what context, and what has changed.
+
+## Key Information
+
+- [Homepage](https://www.victoryvelocity.ca): Overview of services, approach, and how to get started.
+- [Blog](https://www.victoryvelocity.ca/blog): Editorial content on AI visibility, GEO, and the shift from traditional search to generative AI.
+- [The Biggest Shift in Marketing Since Google Ads](https://www.victoryvelocity.ca/blog/the-biggest-shift-in-marketing-since-google-ads): An in-depth article on how generative AI is restructuring the marketing landscape.
+
+## What We Do Not Do
+
+- Traditional SEO or keyword-based search optimization
+- Google Ads, Meta Ads, or other legacy paid media management
+- Social media marketing or content creation unrelated to AI visibility
+- Web design or development services
+
+## Contact
+
+- Email: victoryvelocityy@gmail.com
+- Website: https://www.victoryvelocity.ca
+- Location: Canada (serving clients remotely across North America)
+
+## AI Discovery Files
+
+- [llms.txt](https://www.victoryvelocity.ca/llms.txt): This file
+- [sitemap.xml](https://www.victoryvelocity.ca/sitemap.xml): Full site sitemap
