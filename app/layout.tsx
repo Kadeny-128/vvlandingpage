@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.victoryvelocity.ca",
   },
+  other: {
+    "msvalidate.01": "B51F27CD7C8EA461EAA0CD6AFC3B7246",
+  },
 };
 
 const schema = {
