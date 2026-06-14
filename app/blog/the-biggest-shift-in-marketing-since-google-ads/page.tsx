@@ -31,6 +31,7 @@ export default function BlogPost() {
           <Link href="/#services">Services</Link>
           <Link href="/#process">Approach</Link>
           <Link href="/blog">Blog</Link>
+          <Link href="/about">About</Link>
         </div>
         <Link href="/#contact" className="cta">
           Work With Us

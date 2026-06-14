@@ -7,5 +7,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    {
+      url: 'https://www.victoryvelocity.ca/about',
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://www.victoryvelocity.ca/blog',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://www.victoryvelocity.ca/blog/the-biggest-shift-in-marketing-since-google-ads',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
   ]
 }

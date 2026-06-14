@@ -650,6 +650,88 @@ footer .wrap { max-width: 720px; }
 }
 .post-card:hover .post-card-read { color: var(--white); }
 
+/* ---- about ---- */
+.about-page {
+  background: #181818;
+  min-height: calc(100vh - 78px - 81px);
+  display: flex;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.about-split {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: stretch;
+}
+
+.about-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.about-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(52px, 6.4vw, 90px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+  color: var(--white);
+}
+
+.about-role {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  color: var(--faint);
+  margin: 0 0 52px;
+}
+
+.about-body {
+  margin-bottom: 48px;
+}
+
+.about-body p {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.55vw, 20px);
+  line-height: 1.72;
+  color: var(--mute);
+  margin: 0 0 24px;
+}
+.about-body p:last-child { margin-bottom: 0; }
+
+.about-links {
+  display: flex;
+  gap: 36px;
+}
+
+.about-links a {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(245,244,241,0.42);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.about-links a:hover { color: var(--white); }
+
+.about-right {
+  position: relative;
+}
+
+.about-photo-wrap {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 /* ---- responsive ---- */
 @media (max-width: 900px) {
   .blog-nav { padding: 0 26px; }
@@ -672,4 +754,8 @@ footer .wrap { max-width: 720px; }
   .faq-heading { margin-bottom: 48px; }
   .faq-q { font-size: 12px; }
   .faq-item summary { padding: 22px 0; gap: 24px; }
+  .about-page { padding: 64px 0 80px; align-items: flex-start; }
+  .about-split { grid-template-columns: 1fr; gap: 48px; }
+  .about-right { position: relative; aspect-ratio: 1; width: 100%; }
+  .about-photo-wrap { position: absolute; inset: 0; }
 }
