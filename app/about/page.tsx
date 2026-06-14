@@ -56,7 +56,7 @@ export default function About() {
               </div>
               <div className="about-links">
                 <a
-                  href="https://www.linkedin.com/in/kaden-yeung/"
+                  href="https://www.linkedin.com/in/kadeny/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
