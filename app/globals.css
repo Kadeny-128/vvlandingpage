@@ -654,9 +654,13 @@ footer .wrap { max-width: 720px; }
 .about-page {
   background: #181818;
   min-height: calc(100vh - 78px - 81px);
-  display: flex;
-  align-items: center;
   padding: 100px 0;
+}
+
+.about-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin: 96px 0;
 }
 
 .about-split {
@@ -754,7 +758,8 @@ footer .wrap { max-width: 720px; }
   .faq-heading { margin-bottom: 48px; }
   .faq-q { font-size: 12px; }
   .faq-item summary { padding: 22px 0; gap: 24px; }
-  .about-page { padding: 64px 0 80px; align-items: flex-start; }
+  .about-page { padding: 64px 0 80px; }
+  .about-divider { margin: 64px 0; }
   .about-split { grid-template-columns: 1fr; gap: 48px; }
   .about-right { position: relative; aspect-ratio: 1; width: 100%; }
   .about-photo-wrap { position: absolute; inset: 0; }

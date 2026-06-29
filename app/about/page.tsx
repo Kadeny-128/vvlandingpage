@@ -5,12 +5,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About — Victory Velocity",
   description:
-    "Kaden Yeung is the founder of Victory Velocity, a Canadian AI visibility and advertising agency helping brands get cited in AI-generated answers.",
+    "Meet the co-founders of Victory Velocity — Kaden Yeung and Jared Shum — a Canadian AI visibility and advertising agency helping brands get cited in AI-generated answers.",
   alternates: { canonical: "https://www.victoryvelocity.ca/about" },
   openGraph: {
     title: "About — Victory Velocity",
     description:
-      "Kaden Yeung is the founder of Victory Velocity, helping brands get cited in AI answers.",
+      "Meet the co-founders of Victory Velocity, helping brands get cited in AI answers.",
     url: "https://www.victoryvelocity.ca/about",
     siteName: "Victory Velocity",
   },
@@ -32,11 +32,12 @@ export default function About() {
 
       <main className="about-page">
         <div className="wrap">
-          <div className="about-split">
 
+          {/* ── Kaden ── */}
+          <div className="about-split">
             <div className="about-left">
               <h1 className="about-name">Kaden Yeung</h1>
-              <p className="about-role">Founder, Victory Velocity</p>
+              <p className="about-role">Co-Founder &amp; CEO, Victory Velocity</p>
               <div className="about-body">
                 <p>
                   I&rsquo;m 18, based in Vancouver, and finishing high school before heading to
@@ -83,8 +84,63 @@ export default function About() {
                 />
               </div>
             </div>
-
           </div>
+
+          <div className="about-divider" />
+
+          {/* ── Jared ── */}
+          <div className="about-split">
+            <div className="about-left">
+              <h2 className="about-name">Jared Shum</h2>
+              <p className="about-role">Co-Founder &amp; CTO, Victory Velocity</p>
+              <div className="about-body">
+                <p>
+                  I&rsquo;m based in Vancouver, working at the intersection of machine learning
+                  and full-stack engineering, and heading to UBC to study Computer Science & Business 
+                  this fall.
+                </p>
+                <p>
+                  Previously worked at an ML startup, I saw firsthand how fast the AI landscape
+                  is changing the online browsing experience. What took months of SEO work to
+                  rank is now getting rewritten by a language model in seconds — and most brands
+                  have no idea it&rsquo;s happening.
+                </p>
+                <p>
+                  At Victory Velocity, I think the shift in how people find information is as
+                  much a technical problem as a marketing one. I&rsquo;m here to build the
+                  infrastructure that makes the strategy actually stick.
+                </p>
+              </div>
+              <div className="about-links">
+                <a
+                  href="https://www.linkedin.com/in/jaredyhshum/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn →
+                </a>
+                <a
+                  href="https://github.com/jyshum"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub →
+                </a>
+              </div>
+            </div>
+
+            <div className="about-right">
+              <div className="about-photo-wrap">
+                <Image
+                  src="/jared.jpg"
+                  alt="Jared Shum"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "10% 90%", transform: "scale(1.55)", transformOrigin: "72% 60%" }}
+                />
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
 
