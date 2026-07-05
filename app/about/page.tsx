@@ -126,6 +126,13 @@ export default function About() {
                 >
                   GitHub →
                 </a>
+                <a
+                  href="https://www.jaredshum.ca/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  More About Me →
+                </a>
               </div>
             </div>
 
