@@ -139,7 +139,7 @@ export default function About() {
             <div className="about-right">
               <div className="about-photo-wrap">
                 <Image
-                  src="/jared.jpg"
+                  src="/jaredremakesuitpic.png"
                   alt="Jared Shum"
                   fill
                   style={{ objectFit: "cover", objectPosition: "10% 90%", transform: "scale(1.55)", transformOrigin: "72% 60%" }}
