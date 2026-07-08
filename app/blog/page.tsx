@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Redis } from "@upstash/redis";
 
 export const metadata: Metadata = {
   title: "Blog — Victory Velocity",
@@ -7,7 +8,40 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.victoryvelocity.ca/blog" },
 };
 
-export default function BlogIndex() {
+export const dynamic = "force-dynamic";
+
+interface BLGArticle {
+  title: string;
+  slug: string;
+  metaDescription: string;
+  content_html: string;
+  createdAt: string;
+}
+
+async function getWebhookArticles(): Promise<BLGArticle[]> {
+  try {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    });
+    const slugs = await redis.lrange<string>("article-slugs", 0, -1);
+    if (!slugs || slugs.length === 0) return [];
+    const raws = await redis.mget<string[]>(
+      ...slugs.map((s) => `article:${s}`)
+    );
+    return raws
+      .filter(Boolean)
+      .map((r) =>
+        (typeof r === "string" ? JSON.parse(r) : r) as BLGArticle
+      );
+  } catch {
+    return [];
+  }
+}
+
+export default async function BlogIndex() {
+  const webhookArticles = await getWebhookArticles();
+
   return (
     <>
       <nav className="blog-nav">
@@ -29,6 +63,32 @@ export default function BlogIndex() {
             </h1>
 
             <div className="post-list">
+              {webhookArticles.map((article) => {
+                const publishDate = new Date(article.createdAt).toLocaleDateString(
+                  "en-US",
+                  { month: "long", year: "numeric" }
+                );
+                const wordCount = article.content_html
+                  .replace(/<[^>]+>/g, " ")
+                  .trim()
+                  .split(/\s+/).length;
+                const readTime = Math.max(1, Math.round(wordCount / 200));
+                return (
+                  <Link
+                    key={article.slug}
+                    href={`/blog/${article.slug}`}
+                    className="post-card"
+                  >
+                    <div className="post-card-meta">
+                      {publishDate}&nbsp;&nbsp;·&nbsp;&nbsp;{readTime} min read
+                    </div>
+                    <h2 className="post-card-title">{article.title}</h2>
+                    <p className="post-card-excerpt">{article.metaDescription}</p>
+                    <span className="post-card-read">Read article →</span>
+                  </Link>
+                );
+              })}
+
               <Link
                 href="/blog/the-biggest-shift-in-marketing-since-google-ads"
                 className="post-card"
