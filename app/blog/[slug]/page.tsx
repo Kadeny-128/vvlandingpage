@@ -1,29 +1,13 @@
-import { Redis } from "@upstash/redis";
+import { listArticles, getArticle } from "@/lib/babylovegrowth";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+export const revalidate = 3600;
 
-interface BLGArticle {
-  title: string;
-  slug: string;
-  metaDescription: string;
-  content_html: string;
-  content_markdown?: string;
-  heroImageUrl?: string;
-  createdAt: string;
-  jsonLd?: object;
-  faqJsonLd?: object;
-}
-
-function estimateReadTime(html: string): number {
-  const text = html.replace(/<[^>]+>/g, " ");
-  const words = text.trim().split(/\s+/).length;
-  return Math.max(1, Math.round(words / 200));
+export async function generateStaticParams() {
+  const articles = await listArticles();
+  return articles.map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({
@@ -31,38 +15,43 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const raw = await redis.get<string>(`article:${params.slug}`);
-  if (!raw) return {};
-  const article: BLGArticle = typeof raw === "string" ? JSON.parse(raw) : raw;
+  const articles = await listArticles();
+  const summary = articles.find((a) => a.slug === params.slug);
+  if (!summary) return {};
   return {
-    title: `${article.title} — Victory Velocity`,
-    description: article.metaDescription,
+    title: `${summary.title} — Victory Velocity`,
+    description: summary.meta_description,
     alternates: {
-      canonical: `https://www.victoryvelocity.ca/blog/${article.slug}`,
+      canonical: `https://www.victoryvelocity.ca/blog/${summary.slug}`,
     },
     openGraph: {
-      title: article.title,
-      description: article.metaDescription,
+      title: summary.title,
+      description: summary.meta_description,
       type: "article",
-      publishedTime: article.createdAt,
+      publishedTime: summary.created_at,
     },
   };
 }
 
-export const dynamic = "force-dynamic";
+function estimateReadTime(html: string): number {
+  const words = html.replace(/<[^>]+>/g, " ").trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
 
 export default async function DynamicBlogPost({
   params,
 }: {
   params: { slug: string };
 }) {
-  const raw = await redis.get<string>(`article:${params.slug}`);
-  if (!raw) notFound();
+  const articles = await listArticles();
+  const summary = articles.find((a) => a.slug === params.slug);
+  if (!summary) notFound();
 
-  const article: BLGArticle =
-    typeof raw === "string" ? JSON.parse(raw) : raw;
+  const article = await getArticle(summary.id);
+  if (!article) notFound();
+
   const readTime = estimateReadTime(article.content_html);
-  const publishDate = new Date(article.createdAt).toLocaleDateString("en-US", {
+  const publishDate = new Date(article.created_at).toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
@@ -104,7 +93,7 @@ export default async function DynamicBlogPost({
               ← Blog
             </Link>
             <h1 className="blog-post-title">{article.title}</h1>
-            <p className="blog-post-subtitle">{article.metaDescription}</p>
+            <p className="blog-post-subtitle">{article.meta_description}</p>
             <div className="blog-post-meta">
               <span>{publishDate}</span>
               <span className="blog-meta-dot">·</span>
@@ -115,11 +104,11 @@ export default async function DynamicBlogPost({
 
         <article>
           <div className="blog-wrap">
-            {article.heroImageUrl && (
+            {article.hero_image_url && (
               <div className="blog-cover">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={article.heroImageUrl}
+                  src={article.hero_image_url}
                   alt={article.title}
                   style={{ width: "100%", height: "auto" }}
                 />
@@ -148,8 +137,7 @@ export default async function DynamicBlogPost({
                   fontSize: "15px",
                 }}
               >
-                AI visibility &amp; advertising for brands that intend to be
-                cited.
+                AI visibility &amp; advertising for brands that intend to be cited.
               </p>
               <span
                 style={{
