@@ -4,7 +4,7 @@ import { listArticles } from "@/lib/babylovegrowth";
 
 export const metadata: Metadata = {
   title: "Blog — Victory Velocity",
-  description: "Insights on generative engine optimization, ChatGPT Ads, and AI-powered brand discovery.",
+  description: "Articles on generative engine optimization, ChatGPT Ads, and AI-powered brand discovery — written by the Victory Velocity team in Vancouver.",
   alternates: { canonical: "https://www.victoryvelocity.ca/blog" },
 };
 

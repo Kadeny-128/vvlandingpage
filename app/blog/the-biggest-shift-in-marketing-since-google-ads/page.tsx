@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "The Biggest Shift in Marketing Since Google Ads — Victory Velocity",
   description:
-    "AI is rewriting how customers discover brands. A practical breakdown of generative engine optimization and ChatGPT ads.",
+    "AI is rewriting how customers discover brands. A practical breakdown of generative engine optimization, GEO strategy, and how ChatGPT Ads work.",
   alternates: {
     canonical:
       "https://www.victoryvelocity.ca/blog/the-biggest-shift-in-marketing-since-google-ads",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Biggest Shift in Marketing Since Google Ads",
     description:
-      "AI is rewriting how customers discover brands. A practical breakdown of generative engine optimization and ChatGPT ads.",
+      "AI is rewriting how customers discover brands. A practical breakdown of generative engine optimization, GEO strategy, and how ChatGPT Ads work.",
     type: "article",
     publishedTime: "2026-06-01",
     authors: ["Kaden Yeung"],

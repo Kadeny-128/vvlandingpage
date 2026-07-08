@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About — Victory Velocity",
   description:
-    "Meet the co-founders of Victory Velocity — Kaden Yeung and Jared Shum — a Canadian AI visibility and advertising agency helping brands get cited in AI-generated answers.",
+    "Meet the team behind Victory Velocity — a Canadian AI visibility agency helping brands get cited in AI answers and run ChatGPT Ads campaigns.",
   alternates: { canonical: "https://www.victoryvelocity.ca/about" },
   openGraph: {
     title: "About — Victory Velocity",

@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Victory Velocity | Be the answer, everywhere they ask.",
   description:
-    "Victory Velocity helps brands get cited in AI answers and running on ChatGPT Ads. We handle Generative Engine Optimization, ChatGPT Ads setup, and weekly AI visibility tracking.",
+    "Victory Velocity helps brands get cited in AI answers and run ChatGPT Ads campaigns. We handle GEO, ChatGPT Ads setup, and weekly AI visibility tracking.",
   metadataBase: new URL("https://www.victoryvelocity.ca"),
   openGraph: {
     title: "Victory Velocity | Be the answer, everywhere they ask.",
